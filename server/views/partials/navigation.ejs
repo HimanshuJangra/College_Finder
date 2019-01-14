@@ -1,0 +1,10 @@
+<a href="/">home</a>
+<% if(user) { %>
+        <h1><a href="/users/me" class="aaa"><%= user1.email %></a></h1>
+        <a href="/logout">logout</a>
+        <a href="/toodos1"> Add Collages</a>
+<% } %>
+<% if(!user) { %>
+        <a href="/signup">signup</a>
+        <a href="/login">login</a>
+<% } %>

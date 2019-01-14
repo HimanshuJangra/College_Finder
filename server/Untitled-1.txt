@@ -1,0 +1,35 @@
+<a href="/">home</a>
+    <% if(user) { %>
+        <h1>
+            <a href="/users/me" class="aaa">
+                <%= user.name %>
+            </a>
+        </h1>
+        <a href="/logout">logout</a>
+        <% if(user.kind !== "user") { %>
+            <a href="/addCollege"> Add College</a>
+        <% } %>
+        <% if(user.kind === "admin") { %>
+            <a href="/deleteCollege"> Remove College</a>
+        <% } %>
+    <% } %>
+    <% if(!user) { %>
+        <a href="/signup">signup</a>
+        <a href="/login">login</a>
+    <% } %>
+    <p class="asd">
+        Welcome to collageFinder Portal
+    </p>
+    <br><br>
+    
+    <p class="asdf">Find Collages</p>
+<form action="/" method="POST">
+    <input type="text" class="ax" name="name" placeholder="find collages">
+    <input type="submit" value="find" class="ar">
+</form>
+    <% for(var i = 0; i < colleges.length; i++) { %>
+        <p class="asdf">
+            <% idx = '/college/' + colleges[i]._id %>
+            <a href=<%= idx %>><%= colleges[i].name %></a>
+        </p>
+    <% } %>

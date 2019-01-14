@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home Page</title>
+    <link rel="stylesheet" href="CSS/common.css">
+</head>
+
+<body>
+    <a href="/">home</a>
+    <% if(user1) { %>
+    <p><a href="/users/me">
+            <%= user1.email %></a></p>
+    <% } %>
+    <p class="asd">Comments</p>
+    <% for(var i = 0; i < todos1.length; i++) { %>
+    <p class="asdf">
+        <a href=""><%= todos1[i].text %></a>
+    </p>
+    <% } %>
+    <a href="/toodos1">new comment</a>
+
+</body>
+
+</html>

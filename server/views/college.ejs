@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>College Page</title>
+    <link rel="stylesheet" href="../CSS/common.css">
+</head>
+
+<body>
+    <a href="/">home</a>
+    <p class="asd">
+        <%= college.name %>
+    </p>
+    <% if(user.kind !== "college") { %>
+        <a href="/toodos">add comment</a>
+    <% } %>
+    Rating
+    <%= college.rating %>
+    <% for(var i = 0; i < todos.length; i ++) { %>
+        <p><%= todos[i].text %></p>
+    <% } %>
+</body>
+
+</html>

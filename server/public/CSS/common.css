@@ -1,0 +1,62 @@
+a {
+    width: auto;
+    height: 12px;
+    padding: 3px;
+    text-decoration: none;
+    background-color: red;
+}
+
+a:link,
+a:visited,
+a:active {
+    color: white;
+}
+
+a:hover {
+    color: red;
+    background-color: white;
+}
+
+.aaa {
+    text-decoration: none;
+    background-color: white;
+}
+
+.aaa:link,
+.aaa:visited,
+.aaa:active {
+    color: blue;
+}
+
+.aaa:hover {
+    color: green;
+}
+
+.asdf {
+    color: black;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+.asd {
+    color: blue;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 28px;
+}
+
+.ax {
+    padding: 8px;
+    width: 50%;
+    height: auto;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.ar {
+    padding: 8px;
+    width: 100px;
+    height: auto;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: red;
+    color: white;
+}

@@ -1,3 +1,4 @@
+// some text
 <a href="/">home</a>
     <% if(user) { %>
         <h1>

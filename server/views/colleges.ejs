@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/navigation.css">
+</head>
+
+<body>
+    <% include partials/navigation %>
+    <% for(var i = 0; i < colleges.length; i++) { %>
+    <h1>
+        <% idx = '/college/' + colleges[i]._id %>
+        <a href=<%=idx %> class="aaa">
+            <%= colleges[i].name %></a>
+    </h1>
+    <% } %>
+</body>
+
+</html>

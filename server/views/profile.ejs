@@ -3,15 +3,18 @@
 
 <head>
     <title>Home Page</title>
-    <link rel="stylesheet" href="../CSS/common.css">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../css/navigation.css">
 </head>
 
 <body>
-    <a href="/">home</a>
+    <% include partials/navigation %>
     <p class="asd"><%= user.name %></p>
     <p class="asdf">Hey this is me, <%= user.name %></p>
-    <a href="/users/me/change">change bio</a>
-
+    <a href="/me/update">change bio</a>
+    <% if(user.kind !== "user") { %>
+        <a href="/request/college/add">add college</a>
+    <% } %>
 </body>
 
 </html>

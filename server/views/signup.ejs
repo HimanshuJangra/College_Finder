@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Signup Page</title>
-    <link rel="stylesheet" href="CSS/common.css">
+    <title>Home Page</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/navigation.css">
 </head>
 <body>
-    <a href="/">home</a>
+    <% include partials/navigation %>
     <br><br>
-    <form action="/users" method="POST" class="asdf">
+    <form action="/signup" method="POST" class="asdf">
         email
         <input type="text" name="email" class="ax">
         <br><br>

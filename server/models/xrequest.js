@@ -18,6 +18,12 @@ var XrequestSchema = new mongoose.Schema({
     }
 });
 
+XrequestSchema.methods.toJSON = function () {
+    var xrequest = this;
+    var xrequestObject = request.toObject();
+    return _.pick(requestObject, ["_id", "name", "rating"]);
+};
+
 var Xrequest = mongoose.model("Xrequest", XrequestSchema);
 
 

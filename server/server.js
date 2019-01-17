@@ -7,12 +7,24 @@ const _ = require("lodash");
 const bcrypt = require("bcryptjs");
 
 // derived
-const {mongoose} = require("./db/mongoose");
-const {Todo} = require("./models/todo");
-const {User} = require("./models/user");
-const {College} = require("./models/college");
-const {ObjectID} = require("mongodb");
-const {Xrequest} = require("./models/xrequest.js");
+const {
+    mongoose
+} = require("./db/mongoose");
+const {
+    Comment
+} = require("./models/comment");
+const {
+    User
+} = require("./models/user");
+const {
+    College
+} = require("./models/college");
+const {
+    ObjectID
+} = require("mongodb");
+const {
+    Xrequest
+} = require("./models/xrequest");
 
 // custom functions
 
@@ -28,7 +40,9 @@ app.set("view engine", "ejs");
 
 // defined middlewares
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.use(session({
     secret: "keyboard cat",
     resave: false,
@@ -37,8 +51,12 @@ app.use(session({
 app.use(express.static(path.join(__dirname, "public")));
 
 // custom middlewares
-const {authenticate} = require("./middleware/authenticate");
-const {authenticate1} = require("./middleware/authenticate1");
+const {
+    authenticate
+} = require("./middleware/authenticate");
+const {
+    authenticate1
+} = require("./middleware/authenticate1");
 
 //routes
 // home page
@@ -56,7 +74,7 @@ app.get("/", (req, res) => {
 app.post("/colleges", (req, res) => {
     College.getColleges(req.body.name).then((colleges) => {
         var user = null;
-        if(req.session.xuser) {
+        if (req.session.xuser) {
             user = req.session.xuser.user;
         }
         res.render("colleges", {
@@ -75,13 +93,13 @@ app.get("/college/:id", (req, res) => {
         if (req.session.xuser) {
             user = req.session.xuser.user;
         }
-        Todo.find({
+        Comment.find({
             _college: college._id
-        }).then((todos) => {
+        }).then((comments) => {
             res.render("college", {
                 user,
                 college,
-                todos
+                comments
             });
         }).catch((err) => {
             res.redirect("/");
@@ -201,20 +219,72 @@ app.get("/logout", authenticate1, (req, res) => {
 
 // /request/add/college
 app.get("/request/college/add", authenticate1, (req, res) => {
-    res.render("addCollege");
+    res.render("addCollege", {
+        user: req.session.xuser.user
+    });
 });
 
 // new collage---------------
+// app.post("/request/college/add", authenticate1, (req, res) => {
+//     var body = _.pick(req.body, ["name", "rating"]);
+//     body._creator = req.session.xuser.user._id;
+//     var college = new College(body);
+//     college.save().then((doc) => {
+//         res.redirect("/");
+//     }, (err) => {
+//         res.status(400).send();
+//     });
+// });
+
+app.get("/requests", (req, res) => {
+    res.send();
+});
+
 app.post("/request/college/add", authenticate1, (req, res) => {
     var body = _.pick(req.body, ["name", "rating"]);
     body._creator = req.session.xuser.user._id;
-    var college = new College(body);
-    college.save().then((doc) => {
+    var xrequest = new Xrequest(body);
+    xrequest.save().then((doc) => {
         res.redirect("/");
     }, (err) => {
         res.status(400).send();
     });
-    // res.render(req.session);
+});
+
+app.post("/newComment/:id", (req, res) => {
+    var comment = new Comment({
+        text: req.body.text,
+        _creator: req.session.xuser.user._id,
+        _college: req.params.id
+    });
+    comment.save().then((doc) => {
+        res.redirect("/college/" + req.params.id);
+    }, (err) => {
+        res.status(400).send(err);
+    });
+});
+
+app.post("/newReply/:id1/:id2", (req, res) => {
+    Comment.findById(req.params.id2).then((comment) => {
+        var body = comment.reply;
+        body.push({
+            text: req.body.text
+        });
+        Comment.findByIdAndUpdate({
+            _id: comment._id
+        }, {
+            $set: {
+                reply: body
+            }
+        }, {
+            new: true
+        }).then((comment) => {
+            res.redirect("/college/" + req.params.id1);
+        });
+    }).catch((err) => {
+        res.status(400).send(err);
+    });
+
 });
 
 app.get("/reset", (req, res) => {

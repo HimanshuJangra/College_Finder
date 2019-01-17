@@ -179,7 +179,7 @@ app.post("/todos", authenticate1, (req, res) => {
         res.redirect("/college/" + String(req.session.xcollege.college._id));
     }, () => {
         res.status(400).send();
-    })
+    });
 });
 
 // todos

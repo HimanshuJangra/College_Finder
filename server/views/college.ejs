@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Home Page</title>
     <meta charset="utf-8">
@@ -13,6 +14,36 @@
     </p>
     Rating
     <%= college.rating %>
+    <% xid = '/newComment/' + college._id %>
+    <form action=<%=xid %> method="post">
+        new Comments
+        <input type="text" name="text">
+        <input type="submit" value="add">
+    </form>
+    <p>Comments</p>
+    <% for(var i = 0; i < comments.length; i ++) { %>
+    <p>
+        <%= i+1 %>&nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        &nbsp;
+        <%= comments[i].text %>
+        replies:
+        <% if(comments[i].reply.length !== 0) { %>
+        <% for(var j = 0; j < comments[i].reply.length; j ++) { %>
+            <p><%= comments[i].reply[j].text %></p>
+        <% } %>
+        <% } %>
+        <% xid2 = '/newReply/' + college._id + '/' + comments[i]._id %>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<form action=<%= xid2 %> method="POST">
+            reply&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="text">
+            <input type="submit" value="add">
+        </form>
+    </p>
+    <% } %>
+
+
 </body>
 
 </html>

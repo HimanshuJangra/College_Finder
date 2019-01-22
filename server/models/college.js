@@ -9,9 +9,12 @@ var CollegeSchema = new mongoose.Schema({
     },
     rating: {
         type: Number,
-        required: true,
         default: 0
     },
+    fields: [{
+        type: String,
+        required: true
+    }],
     _creator: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
@@ -21,7 +24,7 @@ var CollegeSchema = new mongoose.Schema({
 CollegeSchema.methods.toJSON = function () {
     var college = this;
     var collegeObject = college.toObject();
-    return _.pick(collegeObject, ["_id", "name", "rating"]);
+    return _.pick(collegeObject, ["_id", "name", "fields", "rating"]);
 };
 
 CollegeSchema.statics.getColleges = function (name) {

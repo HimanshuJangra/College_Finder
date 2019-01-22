@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Home Page</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="css/navigation.css">
+    <%- include("partials/files") %>
+    <style>
+        body {
+            background-image: url("image/homewall.jpg");
+            background-size: cover;
+        }
+    </style>
 </head>
+
 <body>
-    <% include partials/navigation %>
-    <% include partials/header %>
+    <%- include("partials/navigation") %>
+    <%- include("partials/homeform") %>
 </body>
+
 </html>

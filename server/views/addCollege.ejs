@@ -4,22 +4,42 @@
 <head>
     <title>Home Page</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../../css/navigation.css">
+    <%- include("partials/files") %>
 </head>
 
 <body>
     <%- include('partials/navigation') %>
     <p class="asd">Add new college</p>
-    
-    <form action="/request/college/add" method="POST" class="asdf">
+
+    <form action="../../request/college/add" method="POST" class="asdf">
         Name of collage
-        <input type="text" name="name" class="ax">
-        <br><br>
-        Rating
-        <input type="text" name="rating" class="ax">
-        <br><br>
-        <input type="submit" value="submit" class="ar">
+        <input type="text" name="name">
+        <div class="c">
+            . <input type="text" name="fields">
+            <br>
+        </div>
+        <input type="button" value="add" onclick="fun1()">
+        <input type="submit" value="submit" class="c">
     </form>
+    <script>
+        function fun1() {
+            var a, b, c;
+            a = document.getElementsByClassName("c")[0];
+            b = document.createTextNode(". ");
+            a.appendChild(b);
+            b = document.createElement("input");
+            c = document.createAttribute("name");
+            c.value = "fields";
+            b.setAttributeNode(c);
+            c = document.createAttribute("required");
+            b.setAttributeNode(c);
+            a.appendChild(b);
+            b = document.createElement("br");
+            a.appendChild(b);
+        }
+    </script>
 </body>
 
 </html>
+
+<!-- /request/college/add -->

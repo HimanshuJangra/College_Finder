@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Home Page</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="css/navigation.css">
+    <%- include("partials/files") %>
+
 </head>
+
 <body>
     <% include partials/navigation %>
-    <br><br>
+    <!-- <br><br>
     <form action="/signup" method="POST" class="asdf">
         email
         <input type="text" name="email" class="ax">
@@ -26,6 +29,113 @@
         <input type="password" name="password" class="ax">
         <br><br>
         <input type="submit" value="submit" class="ar">
+    </form> -->
+    <form class="needs-validation" action="/signup" method="POST">
+        <div class="form-row">
+            <div class="col-md-4 mb-3 ml-5">
+                <label for="validationCustom01">Email</label>
+                <input type="email" class="form-control" id="validationCustom01" placeholder="Your email" required name="email">
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="validationCustom02">Password</label>
+                <input type="password" class="form-control" id="validationCustom02" placeholder="Password" required
+                    name="password">
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-4 mb-3 ml-5">
+                <label for="validationCustomUsername">Username</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroupPrepend">@</span>
+                    </div>
+                    <input type="text" class="form-control" id="validationCustomUsername" placeholder="Username"
+                        aria-describedby="inputGroupPrepend" required name="name">
+                    <div class="invalid-feedback">
+                        Please choose a username.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3 ml-5">
+                <label for="validationCustomUsername">Profile Picture</label>
+                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="file">
+                <div class="invalid-feedback">
+                    Please choose a username.
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <select class="form-control ml-5 mr-5" name="kind">
+                <option>User</option>
+                <option>College</option>
+                <option>Admin</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6 mb-3 ml-5">
+                <label for="validationCustom03">City</label>
+                <input type="text" class="form-control" id="validationCustom03" placeholder="City" required name="city">
+                <div class="invalid-feedback">
+                    Please provide a valid city.
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="validationCustom04">State</label>
+                <input type="text" class="form-control" id="validationCustom04" placeholder="State" required name="state">
+                <div class="invalid-feedback">
+                    Please provide a valid state.
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-3 mb-3 ml-5">
+                <label for="validationCustom05">Zip</label>
+                <input type="text" class="form-control" id="validationCustom05" placeholder="Zip" required name="zip">
+                <div class="invalid-feedback">
+                    Please provide a valid zip.
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-check ml-5">
+                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                <label class="form-check-label" for="invalidCheck">
+                    Agree to terms and conditions
+                </label>
+                <div class="invalid-feedback">
+                    You must agree before submitting.
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary ml-5" type="submit">Submit form</button>
     </form>
+
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
 </body>
+
 </html>

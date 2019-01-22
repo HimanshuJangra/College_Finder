@@ -4,16 +4,31 @@
 <head>
     <title>Home Page</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../css/navigation.css">
+    <%- include("partials/files") %>
+    <style>
+        .a {
+            border-radius: 20%;
+            width: 300px;
+            height: 200px;
+            float: right;
+        }
+    </style>
 </head>
 
 <body>
     <% include partials/navigation %>
-    <p class="asd"><%= user.name %></p>
-    <p class="asdf">Hey this is me, <%= user.name %></p>
-    <a href="/me/update">change bio</a>
+    <% pix = "image/" + user.picture %>
+    <img src=<%=pix %> alt="xxx" class="a mx-5 my-5">
+    <p>Your name is
+        <%= user.name %>.</p>
+    <p>I live in
+        <%= user.city %> city in
+        <%= user.state %>.</p>
+    <p>Your zipcode is
+        <%= user.zip %>.</p>
+    <a href="/me/update" class="btn btn-success ml-3">change bio</a>
     <% if(user.kind !== "user") { %>
-        <a href="/request/college/add">add college</a>
+    <a href="/request/college/add" class="btn btn-success">add college</a>
     <% } %>
 </body>
 

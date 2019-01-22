@@ -16,6 +16,10 @@ var UserSchema = new mongoose.Schema({
             message: "{value} is not a valid email"
         }
     },
+    picture: {
+        type: String,
+        default: "800382.jpg"
+    },
     kind: {
         type: String,
         required: true,
@@ -32,6 +36,18 @@ var UserSchema = new mongoose.Schema({
         required: true,
         minlength: 8
     },
+    city: {
+        type: String,
+        required: true
+    },
+    state: {
+        type: String,
+        required: true
+    },
+    zip: {
+        type: Number,
+        required: true
+    },
     tokens: [{
         access: {
             type: String,
@@ -47,7 +63,7 @@ var UserSchema = new mongoose.Schema({
 UserSchema.methods.toJSON = function() {
     var user = this;
     var userObject = user.toObject();
-    return _.pick(userObject, ["_id", "email", "name", "kind"]);
+    return _.pick(userObject, ["_id", "email", "name", "kind", "city", "state", "zip", "picture"]);
 };
 
 UserSchema.methods.generateAuthToken = function() {

@@ -120,7 +120,7 @@ app.get("/signup", (req, res) => {
 
 // /signup
 app.post("/signup", (req, res) => {
-    var body = _.pick(req.body, ["email", "password", "name", "kind"]);
+    var body = _.pick(req.body, ["email", "password", "name", "kind", "city", "state", "zip"]);
     var user = new User(body);
     user.save().then(() => {
         res.redirect("/");
@@ -225,31 +225,31 @@ app.get("/request/college/add", authenticate1, (req, res) => {
 });
 
 // new collage---------------
-// app.post("/request/college/add", authenticate1, (req, res) => {
-//     var body = _.pick(req.body, ["name", "rating"]);
-//     body._creator = req.session.xuser.user._id;
-//     var college = new College(body);
-//     college.save().then((doc) => {
-//         res.redirect("/");
-//     }, (err) => {
-//         res.status(400).send();
-//     });
-// });
-
-app.get("/requests", (req, res) => {
-    res.send();
-});
-
 app.post("/request/college/add", authenticate1, (req, res) => {
-    var body = _.pick(req.body, ["name", "rating"]);
+    var body = _.pick(req.body, ["name", "fields"]);
     body._creator = req.session.xuser.user._id;
-    var xrequest = new Xrequest(body);
-    xrequest.save().then((doc) => {
+    var college = new College(body);
+    college.save().then((doc) => {
         res.redirect("/");
     }, (err) => {
         res.status(400).send();
     });
 });
+
+// app.get("/requests", (req, res) => {
+//     res.send();
+// });
+
+// app.post("/request/college/add", authenticate1, (req, res) => {
+//     var body = _.pick(req.body, ["name", "rating"]);
+//     body._creator = req.session.xuser.user._id;
+//     var xrequest = new Xrequest(body);
+//     xrequest.save().then((doc) => {
+//         res.redirect("/");
+//     }, (err) => {
+//         res.status(400).send();
+//     });
+// });
 
 app.post("/newComment/:id", (req, res) => {
     var comment = new Comment({
@@ -290,7 +290,29 @@ app.post("/newReply/:id1/:id2", (req, res) => {
 app.get("/reset", (req, res) => {
     req.session.xuser = null;
     res.redirect("/");
-})
+});
+
+app.post("/xxxxx", (req, res) => {
+    res.send(req.body);
+});
+
+app.get("/rater/:id", (req, res) => {
+    College.findOneAndUpdate({
+        _id: req.params.id,
+    }, {
+        $inc: {rating: 1}
+    }, {
+        new: true
+    }).then((todo) => {
+        if (!todo) {
+            return res.status(404).send();
+        }
+        var xx = todo.rating;
+        //res.redirect("/college/" + req.params.id);
+    }).catch((err) => {
+        res.status(400).send();
+    });
+});
 
 // port
 app.listen(port, () => {

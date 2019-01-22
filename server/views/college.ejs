@@ -4,7 +4,8 @@
 <head>
     <title>Home Page</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../css/navigation.css">
+<%- include("partials/files") %>
+    
 </head>
 
 <body>
@@ -13,7 +14,13 @@
         <%= college.name %>
     </p>
     Rating
-    <%= college.rating %>
+    <% xid0 = '/rater/' + college._id %>
+    <%= college.rating %><br>
+    <a href=<%= xid0 %>>rate it</a>
+    it has following fields
+    <% for(var i = 0; i < college.fields.length; i++) { %>
+        <p><%= college.fields[i] %></p>
+    <% } %>
     <% xid = '/newComment/' + college._id %>
     <form action=<%=xid %> method="post">
         new Comments

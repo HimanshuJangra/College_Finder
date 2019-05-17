@@ -9,16 +9,16 @@
 
 <body>
     <%- include('partials/navigation') %>
-    <p class="asd">Add new college</p>
-
     <form action="../../request/college/add" method="POST" class="asdf">
-        Name of collage
-        <input type="text" name="name">
+        
+        <input class="asd" type="text" name="name" placeholder="Name of collage"><br><br>
+        
+        <input class="asd" type = "text" placeholder = "About" name="about" style="width: 500px; height: 150px; border: 1px solid black;">
         <div class="c">
-            . <input type="text" name="fields">
+            . <input class="asd" placeholder="Add new study field" type="text" name="fields">
             <br>
         </div>
-        <input type="button" value="add" onclick="fun1()">
+        <input type="button" value="add" onclick="fun1()"><br>
         <input type="submit" value="submit" class="c">
     </form>
     <script>

@@ -48,6 +48,18 @@ var UserSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    country: {
+        type: String,
+        required: true
+    },
+    education: {
+        type: String,
+        required: true
+    },
+    work: {
+        type: String,
+        required: true
+    },
     tokens: [{
         access: {
             type: String,

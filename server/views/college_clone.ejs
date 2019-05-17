@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home Page</title>
+    <meta charset="utf-8">
+<%- include("partials/files") %>
+
+</head>
+
+<body>
+    <!-- navigation bar -->
+    <% include partials/navigation %>
+    <h1>
+        <%= college.name %>
+    </h1>
+    <h3>
+        <% xid0 = '/rater/' + college._id %>
+        Rating :- <%= college.rating %>
+    </h3>
+    &nbsp;&nbsp;&nbsp;
+    <h6><a href=<%= xid0 %>>rate us</a></h6>
+    <h3>study fields</h3>
+    <div style="border: 1px solid black; height: auto; width: auto;">
+        
+     <% for(var i = 0; i < college.fields.length; i++) { %>
+            <p><%= i + 1 %>. <%= college.fields[i] %></p>
+        <% } %>
+        <% xid = '/newComment/' + college._id %>
+    </div>
+    <br><br>
+     <% if(user) { %>
+    <form action=<%=xid %> method="post">
+        <input type="text" name="text" placeholder="post new comment here">
+        <input type="submit" value="post">
+    </form>
+    <% } %>
+
+    <!-- ---------------------------------------------------------------------------------- -->
+    <p id="qwerty"></p>
+    <p>Older Comments</p>
+    <% for(var i = 0; i < comments.length; i ++) { %>
+         <div style="border: 1px solid black; height: auto; width: auto;">
+            <p>
+                <%= i+1 %>&nbsp;&nbsp;&nbsp;<%= comments[i].text %>
+                <br> by 
+                <p style = "color: blue;"><%= comments[i]._creator_name %></p>
+                <span class="liok">
+                    <%= comments[i].counter.like %>
+                </span> ,
+                <span class="diok">
+                     <%= comments[i].counter.dislike %>
+                </span>
+                <br>
+                <% ls = null %>
+                <% pp1 = 'xxx(' + i + ')' %>
+                <% pp2 = 'xx(' + i + ')' %>
+                <!-- ----------------------------------------------------------------------------- -->
+                <% if(comments[i].status.length != 0) { %>
+                    <% for(var j = 0; i < comments[i].status.length; i ++) { %>
+                        <% if(comments[i].status[j].id === user._id) { %>
+                            <% ls = comments[i].status[j] %>
+                        <% } %>
+                    <% } %>
+                    <p style="display: none" class="xprt"><%= comments[i]._id %></p>
+                    <% if(ls != null) { %>
+                        <% if(ls.likest === 1) { %>
+                            <input type="button" value="like" style="background-color: green" onclick=<%= pp1 %>>
+                            <input type="button" value="dislike" onclick=<%= pp2 %>>
+                        <% } else { %>
+                            <input type="button" value="like" onclick=<%= pp1 %>>
+                            <input type="button" value="dislike" style="background-color: red" onclick=<%= pp2 %>>
+                        <% } %>
+                    <% } else { %>
+                        <input type="button" value="like" onclick=<%= pp1 %>>
+                        <input type="button" value="dislike" onclick=<%= pp2 %>>
+                    <% } %>
+                <% } else { %>
+                    <input type="button" value="like" onclick=<%= pp1 %>>
+                    <input type="button" value="dislike" onclick=<%= pp2 %>>
+                <% } %> 
+                <!-- ----------------------------------------------------------------------------- -->
+                <!-- replies on this comment: -->
+                <% if(comments[i].reply.length !== 0) { %>
+                    <% for(var j = 0; j < comments[i].reply.length; j ++) { %>
+                        <p>
+                            &nbsp;&nbsp;&nbsp;
+                            <%= j + 1 %>
+                            .&nbsp;
+                            <%= comments[i].reply[j].text %>
+                        </p>
+                    <% } %>
+                <% } %>
+                
+                <!-- new reply -->
+                <% if(user) { %>
+                    <% xid2 = '/newReply/' + college._id + '/' + comments[i]._id %>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <form action=<%= xid2 %> method="POST">
+                        reply
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" name="text">
+                        <input type="submit" value="add">
+                    </form>
+                <% } %>
+            </p>
+        </div>
+    <% } %>
+
+    <!-- ----------------------------------------------------------------------------------- -->
+    <script>
+        function xxx(z) {
+            var xp = document.getElementsByClassName("xprt")[z].textContent;
+            $.ajax({
+                url: "/like",
+                type: "POST",
+                data: JSON.stringify({status: xp}),
+                contentType: "application/json",
+                dataType: "json",
+                success: function(result) {
+                    // alert(result.stat.like);
+                    // console.log(result);
+                    if(result)
+                    document.getElementsByClassName("liok")[z].innerHTML = result.stat.like;
+                }
+            });
+        }
+        function xx(z) {
+            var xp = document.getElementsByClassName("xprt")[z].textContent;
+            $.ajax({
+                url: "/dislike",
+                type: "POST",
+                data: JSON.stringify({status: xp}),
+                contentType: "application/json",
+                dataType: "json",
+                success: function(result) {
+                    document.getElementsByClassName("diok")[z].innerHTML = result.stat.dislike;
+                }
+            });
+        }
+    </script> 
+</body>
+
+</html>
+
+
+
+
+// Comment.findById(req.params.cmtid).then((comment) => {
+    //     if(comment) {
+    //         var arr = comment.status;
+    //         console.log(comment);
+    //         res.send();
+    //     }
+    // });
+    // Comment.findById(req.params.cmtid).then((comment) => {
+    //     comment.status.forEach((stat) => {
+    //         if(stat.id === req.session.xuser.user._id) {
+    //             if(stat.likest === 1) {
+    //                 res.redirect("/college/" + req.params.clgid);
+    //             } else {
+    //                 Comment.findOneAndUpdate({
+    //                     _id: req.params.cmtid,
+    //                 }, {
+    //                     $inc: {"counter.like": 1},
+    //                     $set: {status: xcv}
+    //                 }, {
+    //                     new: true
+    //                 }).then((resu) => {
+    //                     console.log(resu.counter);
+    //                     return res.send({stat: resu.counter});
+    //                 }).catch((err) => {
+    //                     res.status(400).send();
+    //                 });
+    //             }
+    //         }
+    //     });
+    // })
+    // Comment.findById(req.body.status).then((comment) => {
+    //     var xcv = comment.status;
+    //     xcv.push({
+    //         id: req.session.xuser.user._id,
+    //         likest: 1
+    //     });
+    //     Comment.findOneAndUpdate({
+    //         _id: req.body.status,
+    //     }, {
+    //         $inc: {"counter.like": 1},
+    //         $set: {status: xcv}
+    //     }, {
+    //         new: true
+    //     }).then((resu) => {
+    //         console.log(resu.counter);
+    //         return res.send({stat: resu.counter});
+    //     }).catch((err) => {
+    //         res.status(400).send();
+    //     });
+    // });

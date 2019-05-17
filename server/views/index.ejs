@@ -6,8 +6,34 @@
     <%- include("partials/files") %>
     <style>
         body {
-            background-image: url("image/homewall.jpg");
+            background-image: url("image/180813.jpg");
             background-size: cover;
+        }
+        .cozy {
+          color: white;
+          margin-left: 300px;
+          margin-top: 100px;
+        }
+        .xax {
+          padding: 25px;
+          background-color: rgba(255, 255, 255, 0.8);
+          border: 1px solid rgba(0, 0, 0, 0.6);
+          float: left;
+        }
+        a:link, a:active, a:visited{
+          text-decoration: none;
+          color: black;
+        }
+        span, .xax{
+          font-family: Montserrat;
+        }
+        .zara{
+          font-size: 16px;
+          color: black;
+          height: auto;
+          width: auto;
+          padding: 15px;
+          background-color: rgba(255, 255, 255, 0.8);
         }
     </style>
 </head>
@@ -15,6 +41,20 @@
 <body>
     <%- include("partials/navigation") %>
     <%- include("partials/homeform") %>
+    <div class="cozy">
+      <% if(colleges) { %>
+        <h3>Top rated colleges</h3>
+        <% for(var i = 0; i < colleges.length  && i < 4; i ++) { %>
+          <% idx = '/college/' + colleges[i]._id %>
+          <div class = "xax"><a class="aaa" href=<%=idx %>>
+              <%= colleges[i].name %></a></div>
+        <% } %>
+      <% } %>
+      <br>
+      <p style="clear: both;margin-bottom: 30px;"></p>
+      <span class="zara">Total colleges &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%= colleges.length %></span>
+      <span class="zara">Total Users &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%= count %></span>
+    </div>
 </body>
 
 </html>

@@ -1,11 +1,12 @@
+<% if(user) { %>
+<% var pix = "/image/" + user.picture %>
+<% } %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand mr-5" href="/">College Finder</a>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ml-5">
                         <% if(user) { %>
-                        <% pix = "image/" + user.picture %>
-                        <img src=<%=pix %> alt="xxx" style="border-radius: 50%;height: 40px;width: 40px;">
-
+                        <img src="<%= pix %>" alt="xxx" style="border-radius: 50%;height: 40px;width: 40px;">
                         <a class="nav-item nav-link" href="/me">
                                 <%= user.name %>
                         </a>

@@ -4,19 +4,38 @@ var CollegeSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        minlength: 1,
+        minlength: 2,
         trim: true
     },
-    rating: {
+    rating: [{
+        id: {
+            type: mongoose.Schema.Types.ObjectId
+        },
+        value: {
+            type: Number,
+            default: 0
+        }
+    }],
+    counter: {
         type: Number,
         default: 0
     },
-    fields: [{
+    about: {
         type: String,
         required: true
+    },
+    fields: [{
+        type: String,
+        required: true,
+        minlength: 1,
+        trim: true
     }],
     _creator: {
         type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
+    _creator_name: {
+        type: String,
         required: true
     }
 });

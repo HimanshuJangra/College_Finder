@@ -7,26 +7,12 @@ const _ = require("lodash");
 const bcrypt = require("bcryptjs");
 
 // derived
-const {
-    mongoose
-} = require("./db/mongoose");
-const {
-    Comment
-} = require("./models/comment");
-const {
-    User
-} = require("./models/user");
-const {
-    College
-} = require("./models/college");
-const {
-    ObjectID
-} = require("mongodb");
-const {
-    Xrequest
-} = require("./models/xrequest");
-
-// custom functions
+const {mongoose} = require("./db/mongoose");
+const {Comment} = require("./models/comment");
+const {User} = require("./models/user");
+const {College} = require("./models/college");
+const {ObjectID} = require("mongodb");
+const {Xrequest} = require("./models/xrequest");
 
 // env var
 const port = process.env.PORT || 3000;
@@ -51,28 +37,49 @@ app.use(session({
 app.use(express.static(path.join(__dirname, "public")));
 
 // custom middlewares
-const {
-    authenticate
-} = require("./middleware/authenticate");
-const {
-    authenticate1
-} = require("./middleware/authenticate1");
+const {authenticate} = require("./middleware/authenticate");
+const {authenticate1} = require("./middleware/authenticate1");
 
-//routes
 // home page
 app.get("/", (req, res) => {
     var user = null;
     if (req.session.xuser) {
         user = req.session.xuser.user;
     }
-    res.render("index", {
-        user: user
+    College.find({}).then((colleges) => {
+        User.find().then(usersc => {
+            var count_users = usersc.length;
+            res.render("index", {
+                user,
+                colleges,
+                count: count_users
+            });
+        });
+    }).catch((e) => {
+      res.status(400).send();
     });
 });
 
 // colleges page
 app.post("/colleges", (req, res) => {
-    College.getColleges(req.body.name).then((colleges) => {
+    // College.getColleges(req.body.name).then((colleges) => {
+    //     var user = null;
+    //     if (req.session.xuser) {
+    //         user = req.session.xuser.user;
+    //     }
+    //     res.render("colleges", {
+    //         user,
+    //         colleges
+    //     })
+    // }).catch((e) => {
+    //     res.status(400).send();
+    // });
+    College.collection.createIndex({name: "text"});
+    College.find({
+        $text: {
+            $search: req.body.name
+        }
+    }).then(colleges => {
         var user = null;
         if (req.session.xuser) {
             user = req.session.xuser.user;
@@ -81,15 +88,17 @@ app.post("/colleges", (req, res) => {
             user,
             colleges
         })
-    }).catch((e) => {
-        res.status(400).send();
+        res.send(colleges);
+    }).catch(err => {
+        console.log("kbvdfkjvnjdkvbjfkv");
+        res.send(err)
     });
 });
 
 // collage page
 app.get("/college/:id", (req, res) => {
     College.findById(req.params.id).then((college) => {
-        var user = null;
+        var user = null, details = null;
         if (req.session.xuser) {
             user = req.session.xuser.user;
         }
@@ -107,6 +116,44 @@ app.get("/college/:id", (req, res) => {
     });
 });
 
+app.post("/like/:cmtid/:clgid", (req, res) => {
+    Comment.findOneAndUpdate({
+        _id: req.params.cmtid,
+    }, {
+        $inc: {
+            "counter.like": 1,
+            "counter.dislike": -1
+        }
+    }, {
+        new: true
+    }).then((resu) => {
+        // console.log(resu.counter);
+        // return res.send({stat: resu.counter});
+        res.redirect("/college/" + req.params.clgid);
+    }).catch((err) => {
+        res.redirect("/");
+    });
+});
+
+app.post("/dislike/:cmtid/:clgid", (req, res) => {
+    Comment.findOneAndUpdate({
+        _id: req.params.cmtid,
+    }, {
+        $inc: {
+            "counter.like": -1,
+            "counter.dislike": 1
+        }
+    }, {
+        new: true
+    }).then((resu) => {
+        // console.log(resu.counter);
+        // return res.send({stat: resu.counter});
+        res.redirect("/college/" + req.params.clgid);
+    }).catch((err) => {
+        res.redirect("/");
+    });
+});
+
 // /signup
 app.get("/signup", (req, res) => {
     if (req.session.xuser) {
@@ -120,7 +167,7 @@ app.get("/signup", (req, res) => {
 
 // /signup
 app.post("/signup", (req, res) => {
-    var body = _.pick(req.body, ["email", "password", "name", "kind", "city", "state", "zip"]);
+    var body = _.pick(req.body, ["email", "password", "name", "kind", "city", "state", "zip", "picture", "work", "education", "country"]);
     var user = new User(body);
     user.save().then(() => {
         res.redirect("/");
@@ -163,7 +210,7 @@ app.get("/me/update", authenticate1, (req, res) => {
 });
 
 app.post("/me/update/bio", authenticate1, (req, res) => {
-    var body = _.pick(req.body, ["name"]);
+    var body = _.pick(req.body, ["name", "picture", "city", "state", "country", "zip", "education", "work"]);
     User.updateOne({
         _id: req.user
     }, {
@@ -226,8 +273,9 @@ app.get("/request/college/add", authenticate1, (req, res) => {
 
 // new collage---------------
 app.post("/request/college/add", authenticate1, (req, res) => {
-    var body = _.pick(req.body, ["name", "fields"]);
+    var body = _.pick(req.body, ["name", "about", "fields"]);
     body._creator = req.session.xuser.user._id;
+    body._creator_name = req.session.xuser.user.name;
     var college = new College(body);
     college.save().then((doc) => {
         res.redirect("/");
@@ -255,7 +303,8 @@ app.post("/newComment/:id", (req, res) => {
     var comment = new Comment({
         text: req.body.text,
         _creator: req.session.xuser.user._id,
-        _college: req.params.id
+        _college: req.params.id,
+        _creator_name: req.session.xuser.user.name
     });
     comment.save().then((doc) => {
         res.redirect("/college/" + req.params.id);
@@ -300,7 +349,7 @@ app.get("/rater/:id", (req, res) => {
     College.findOneAndUpdate({
         _id: req.params.id,
     }, {
-        $inc: {rating: 1}
+        $inc: {counter: 1}
     }, {
         new: true
     }).then((todo) => {
@@ -308,7 +357,7 @@ app.get("/rater/:id", (req, res) => {
             return res.status(404).send();
         }
         var xx = todo.rating;
-        //res.redirect("/college/" + req.params.id);
+        res.redirect("/college/" + req.params.id);
     }).catch((err) => {
         res.status(400).send();
     });

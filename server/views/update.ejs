@@ -8,19 +8,53 @@
 </head>
 
 <body>
+    <% pix = "/image/" + user.picture %>
     <% include partials/navigation %>
     <br><br>
-    <form action="/me/update/bio" method="POST">
-        name
-        <input type="text" name="name">
-        <br><br>
-        <input type="submit" value="submit">
+    <h3>Change Bio</h3>
+    <form method="post" action="/me/update/bio">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Name</label>
+            <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Picture</label>
+            <input type="file" name="picture" class="form-control" id="exampleInputEmail1" placeholder="Select your picture">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">City</label>
+            <input type="text" name="city" class="form-control" id="exampleInputEmail1" placeholder="Enter your city">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">State</label>
+            <input type="text" name="state" class="form-control" id="exampleInputEmail1" placeholder="Enter your state">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Country</label>
+            <input type="text" name="country" class="form-control" id="exampleInputEmail1" placeholder="Enter your country">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Zipcode</label>
+            <input type="text" name="zip" class="form-control" id="exampleInputEmail1" placeholder="Enter your zipcode">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Education Experience</label>
+            <input type="text" name="education" class="form-control" id="exampleInputEmail1" placeholder="Enter your Education Experience">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Work Experience</label>
+            <input type="text" name="work" class="form-control" id="exampleInputEmail1" placeholder="Enter your Work Experience">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    <br><br><hr>
+    <h3>Change Password</h3>
     <form action="/me/update/password" method="POST">
-        password
-        <input type="password" name="password">
-        <br><br>
-        <input type="submit" value="submit">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Password</label>
+            <input type="text" name="password" class="form-control" id="exampleInputEmail1" placeholder="Enter your new Password">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </body>
 

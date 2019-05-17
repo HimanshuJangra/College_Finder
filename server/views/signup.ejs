@@ -10,26 +10,6 @@
 
 <body>
     <% include partials/navigation %>
-    <!-- <br><br>
-    <form action="/signup" method="POST" class="asdf">
-        email
-        <input type="text" name="email" class="ax">
-        <br><br>
-        name
-        <input type="text" name="name" class="ax">
-        <br><br>
-        type
-        <select name="kind">
-            <option value="user">user</option>
-            <option value="admin">admin</option>
-            <option value="college">college</option>
-        </select>
-        <br><br>
-        password
-        <input type="password" name="password" class="ax">
-        <br><br>
-        <input type="submit" value="submit" class="ar">
-    </form> -->
     <form class="needs-validation" action="/signup" method="POST">
         <div class="form-row">
             <div class="col-md-4 mb-3 ml-5">
@@ -64,9 +44,9 @@
             </div>
             <div class="col-md-4 mb-3 ml-5">
                 <label for="validationCustomUsername">Profile Picture</label>
-                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="file">
+                <input type="file" class="form-control-file" id="exampleFormControlFile1" name="picture">
                 <div class="invalid-feedback">
-                    Please choose a username.
+                    Please choose a picture.
                 </div>
             </div>
         </div>
@@ -99,6 +79,33 @@
                 <input type="text" class="form-control" id="validationCustom05" placeholder="Zip" required name="zip">
                 <div class="invalid-feedback">
                     Please provide a valid zip.
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-3 mb-3 ml-5">
+                <label for="validationCustom05">Country</label>
+                <input type="text" class="form-control" id="validationCustom05" placeholder="Country" required name="country">
+                <div class="invalid-feedback">
+                    Please provide a valid country.
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-3 mb-3 ml-5">
+                <label for="validationCustom05">Work</label>
+                <input type="text" class="form-control" id="validationCustom05" placeholder="Work" required name="work">
+                <div class="invalid-feedback">
+                    Please provide a valid work experience.
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-3 mb-3 ml-5">
+                <label for="validationCustom05">Education</label>
+                <input type="text" class="form-control" id="validationCustom05" placeholder="Education" required name="education">
+                <div class="invalid-feedback">
+                    Please provide a valid education experience.
                 </div>
             </div>
         </div>

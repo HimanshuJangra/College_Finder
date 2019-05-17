@@ -15,9 +15,35 @@ var CommentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
+    _creator_name: {
+      type: String,
+      required: true
+    },
     reply: [{
         text: {
             type: String
+        },
+        id: {
+            type: mongoose.Schema.Types.ObjectId
+        }
+    }],
+    counter: {
+        like: {
+            type: Number,
+            default: 0
+        },
+        dislike: {
+            type: Number,
+            default: 0
+        }
+    },
+    status: [{
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+        },
+        likest: {
+            type: Number,
+            default: 0
         }
     }]
 });

@@ -33,7 +33,14 @@
     <hr>
     <%= college.about %>
     <hr>
-    <a href=<%= xid3 %>>Rate Us</a><br>
+    <a href=<%= xid3 %>>Rate Us</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <% if(user) { %>
+        <% if(user._id == college._creator) { %>
+            <% xid4 = '/updateclg/' + college._id %>
+            <a href=<%= xid4 %>>Update</a>
+        <% } %>
+    <% } %>
+    <br>
     <h3 style="color: red;">new comment</h3>
     <% xid0 = '/newComment/' + college._id %>
     <% if(user) { %>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home Page</title>
+    <meta charset="utf-8">
+    <%- include("partials/files") %>
+    <style>
+        body{
+            font-family: Montserrat;
+        }
+        .asd {
+            width: 70%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.35);
+            color: black;
+        }
+        textarea{
+            width: 70%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            border: 1px solid rgba(0, 0, 0, 0.35);
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('partials/navigation') %>
+    <h2>Update College Info</h2>
+    <% xid0 = '../../updateclg/' + idr %>
+    <form method="POST" action=<%= xid0 %>>
+        <textarea placeholder = "About" name="about" ></textarea>
+        <div class="c">
+            <input class="asd" placeholder="Add new study field" type="text" name="fields">
+            <br>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="fun1()">Add another study field</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <script>
+        function fun1() {
+            var a, b, c;
+            a = document.getElementsByClassName("c")[0];
+            b = document.createElement("input");
+            c = document.createAttribute("name");
+            c.value = "fields";
+            b.setAttributeNode(c);
+            c = document.createAttribute("required");
+            b.setAttributeNode(c);
+            c = document.createAttribute("placeholder");
+            c.value = "Add new Study Field";
+            b.setAttributeNode(c);
+            c = document.createAttribute("class");
+            c.value = "asd";
+            b.setAttributeNode(c);
+            a.appendChild(b);
+            b = document.createElement("br");
+            a.appendChild(b);
+        }
+    </script>
+</body>
+
+</html>

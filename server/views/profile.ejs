@@ -37,6 +37,9 @@
     <% if(user.kind == "College") { %>
     <a href="/request/college/add" class="btn btn-success">add college</a>
     <% } %>
+    <% if(user.kind == "Admin") { %>
+        <a href="/delusers" class="btn btn-success">delete users</a>
+    <% } %>
 </body>
 
 </html>

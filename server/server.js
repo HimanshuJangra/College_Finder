@@ -116,6 +116,52 @@ app.get("/college/:id", (req, res) => {
     });
 });
 
+app.get("/updateclg/:clgid", (req, res) => {
+    res.render("updateclg", {
+        idr: req.params.clgid
+    });
+});
+
+app.post("/updateclg/:clgid", (req, res) => {
+    College.updateOne({
+        _id: req.params.clgid
+    }, {
+        $set: body
+    }).then((user) => {
+        if (!user) {
+            return Promise.reject();
+        }
+        res.redirect("/logout");
+    }).catch((err) => {
+        res.redirect("/me")
+    });
+});
+
+app.get("/delusers", (req, res) => {
+    User.find().then(users => {
+        var user = null;
+        if (req.session.xuser) {
+            user = req.session.xuser.user;
+        }
+        res.render("colleges", {
+            user,
+            users,
+            colleges
+        })
+    }).catch((e) => {
+        res.status(400).send();
+    });
+    res.render("delusers");
+});
+
+app.get("/delusers/:idr", (req, res) => {
+    Users.deleteOne({id: idr}).then(result => {
+        res.redirect("/");
+    }).catch(err => {
+        res.send();
+    }) 
+});
+
 app.post("/like/:cmtid/:clgid", (req, res) => {
     Comment.findOneAndUpdate({
         _id: req.params.cmtid,

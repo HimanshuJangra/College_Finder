@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+    <meta charset="utf-8">
+<%- include("partials/files") %>
+    
+</head>
+
+<body>
+    <% include partials/navigation %>
+    <% for(var i = 0; i < users.length; i++) { %>
+        <% if(user._id != users[i]._id) { %>
+            <h1>
+                <% idx = '/delusers/' + users[i]._id %>
+                <a class="aaa" href=<%=idx %>>
+                    <%= users[i].name %>
+                </a>
+            </h1>
+            <p><%= users[i]._id %></p>
+        <% } %>
+    <% } %>
+</body>
+
+</html>

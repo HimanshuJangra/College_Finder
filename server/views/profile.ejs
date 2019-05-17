@@ -7,10 +7,15 @@
     <%- include("partials/files") %>
     <style>
         .a {
-            border-radius: 20%;
-            width: 300px;
-            height: 200px;
+            border-radius: 15%;
+            width: 500px;
+            height: 350px;
             float: right;
+            border: 3px solid green;
+        }
+        body{
+            font-family: Montserrat;
+            background-color: rgba(200, 255, 189, 0.836);
         }
     </style>
 </head>
@@ -19,14 +24,15 @@
     <% include partials/navigation %>
     <% pix = "image/" + user.picture %>
     <img src=<%=pix %> alt="xxx" class="a mx-5 my-5">
-    <p><%= user.name %></p>
-    <p><%= user.city %></p>
-    <p><%= user.state %></p>
-    <p><%= user.zip %></p>
-    <p><%= user.work %></p>
-    <p><%= user.education %></p>
-    <p><%= user.country %></p>
-    <p><%= user.kind %></p>
+    <h3>Name</h3>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= user.name %></p>
+    <h3>Address</h3>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= user.city %> in <%= user.state %></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= user.country %> (<%= user.zip %>)</p>
+    <h3>Work Experience</h3>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= user.work %></p>
+    <h3>Education Experience</h3>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= user.education %></p>
     <a href="/me/update" class="btn btn-success ml-3">change bio</a>
     <% if(user.kind == "College") { %>
     <a href="/request/college/add" class="btn btn-success">add college</a>

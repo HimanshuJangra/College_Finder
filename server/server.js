@@ -62,24 +62,7 @@ app.get("/", (req, res) => {
 
 // colleges page
 app.post("/colleges", (req, res) => {
-    // College.getColleges(req.body.name).then((colleges) => {
-    //     var user = null;
-    //     if (req.session.xuser) {
-    //         user = req.session.xuser.user;
-    //     }
-    //     res.render("colleges", {
-    //         user,
-    //         colleges
-    //     })
-    // }).catch((e) => {
-    //     res.status(400).send();
-    // });
-    College.collection.createIndex({name: "text"});
-    College.find({
-        $text: {
-            $search: req.body.name
-        }
-    }).then(colleges => {
+    College.getColleges(req.body.name).then((colleges) => {
         var user = null;
         if (req.session.xuser) {
             user = req.session.xuser.user;
@@ -88,11 +71,28 @@ app.post("/colleges", (req, res) => {
             user,
             colleges
         })
-        res.send(colleges);
-    }).catch(err => {
-        console.log("kbvdfkjvnjdkvbjfkv");
-        res.send(err)
+    }).catch((e) => {
+        res.status(400).send();
     });
+    // College.collection.createIndex({name: "text"});
+    // College.find({
+    //     $text: {
+    //         $search: req.body.name
+    //     }
+    // }).then(colleges => {
+    //     var user = null;
+    //     if (req.session.xuser) {
+    //         user = req.session.xuser.user;
+    //     }
+    //     res.render("colleges", {
+    //         user,
+    //         colleges
+    //     })
+    //     res.send(colleges);
+    // }).catch(err => {
+    //     console.log("kbvdfkjvnjdkvbjfkv");
+    //     res.send(err)
+    // });
 });
 
 // collage page
